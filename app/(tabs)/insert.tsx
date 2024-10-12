@@ -101,7 +101,6 @@ const InsertScreen: React.FC = () => {
         </View>
         <View style={styles.footerContainer}>
           <Button theme="primary" label="Choose a photo" onPress={pickImageAsync}/>
-          <Button label="Use this photo" />
         </View>
         {/* Render each question with its dropdown */}
         {questions.map((question, index) => (
@@ -120,8 +119,7 @@ const InsertScreen: React.FC = () => {
             )}
           </View>
         ))}
-        {/* Example button style usage */}
-        <Text style={styles.button}>Submit Answers</Text>
+        <Button label="Submit answers and image" />
       </View>
     </ScrollView>
   );

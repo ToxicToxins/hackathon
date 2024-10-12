@@ -90,7 +90,6 @@ const InsertScreen: React.FC = () => {
     const newSelectedAnswers = [...selectedAnswers];
     newSelectedAnswers[index] = value;
     setSelectedAnswers(newSelectedAnswers);
-    Alert.alert(`You selected for Question ${index + 1}:`, value);
   };
 
   return (
@@ -113,10 +112,9 @@ const InsertScreen: React.FC = () => {
               placeholder="Select an option"
               boxStyles={styles.dropdownBox}
               dropdownStyles={styles.dropdown}
+              inputStyles={dropdownTextStyle}
+              dropdownTextStyles={styles.dropdownText}
             />
-            {!!selectedAnswers[index] && (
-              <Text style={styles.answer}>Your answer is: {selectedAnswers[index]}</Text>
-            )}
           </View>
         ))}
         <Button label="Submit answers and image" />
@@ -126,54 +124,59 @@ const InsertScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  scrollContainer:{
-    flexGrow : 1,
-    justifyContent : "center",
-    alignItems : "center",
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
-  scrollView:{
-    flex : 1,
-    backgroundColor : "#25292e",
+  scrollView: {
+    flex: 1,
+    backgroundColor: "#1c1c1e",
   },
-  container:{
-    flex : 1,
-    backgroundColor : "#25292e",
-    alignItems : "center",
-    justifyContent : "center",
+  container: {
+    flex: 1,
+    backgroundColor: "#1c1c1e",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  imageContainer:{
-     marginBottom : 20,
-     alignItems : "center",
-   },
-   footerContainer:{
-     marginBottom : 40,
-     alignItems : "center",
-   },
-   questionContainer:{
-     marginBottom : 40,
-     alignItems : "center",
-   },
-   text:{
-     color : "#fff",
-     marginBottom : 10,
-   },
-   answer:{
-     color : "#fff",
-     marginTop : 10,
-   },
-   dropdownBox:{
-     width : 250,
-     backgroundColor : "#fff",
-   },
-   dropdown:{
-     backgroundColor : "#fff",
-   },
-   button:{
-     fontSize : 20,
-     textDecorationLine : "underline",
-     color : "#fff",
-     marginTop : 20,
-   }
+  imageContainer: {
+    marginBottom: 20,
+    alignItems: "center",
+  },
+  footerContainer: {
+    marginBottom: 40,
+    alignItems: "center",
+  },
+  questionContainer: {
+    marginBottom: 40,
+    alignItems: "center",
+    backgroundColor: "#2c2c2e",
+    borderRadius: 10,
+    padding: 15,
+  },
+  text: {
+    color: "#ffffff",
+    marginBottom: 10,
+    fontSize: 16,
+  },
+  answer: {
+    color: "#ffffff",
+    marginTop: 10,
+  },
+  dropdownBox: {
+    width: 250,
+    backgroundColor: "#3a3a3c",
+    borderRadius: 8,
+  },
+  dropdown: {
+    backgroundColor: "#3a3a3c",
+    borderRadius: 8,
+  },
+  dropdownText: {
+    color: "#ffffff",
+  },
 });
+
+const dropdownTextStyle = { color: '#ffffff' };
 
 export default InsertScreen;

@@ -28,8 +28,6 @@ const InsertScreen: React.FC = () => {
     if (!result.canceled) {
       setSelectedImage(result.assets[0].uri);
       console.log(result);
-    } else {
-      alert('You did not select any image.');
     }
   };
 
@@ -128,6 +126,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: "center",
     alignItems: "center",
+    paddingHorizontal: 16, // Add padding to the sides
   },
   scrollView: {
     flex: 1,
@@ -148,11 +147,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   questionContainer: {
-    marginBottom: 40,
-    alignItems: "center",
+    width: '100%', 
+    marginBottom: 20,
     backgroundColor: "#2c2c2e",
     borderRadius: 10,
     padding: 15,
+    alignItems: "center",
   },
   text: {
     color: "#ffffff",
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   dropdownBox: {
-    width: 250,
+    width: '90%', 
     backgroundColor: "#3a3a3c",
     borderRadius: 8,
   },

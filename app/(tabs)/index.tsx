@@ -6,6 +6,7 @@ export default function Page() {
     <View style={styles.container}>
       <Link href="/loading" style={styles.button}>Loading</Link>
       <Link href="/output" style={styles.button}>Output</Link>
+      <Link href="/qna" style={styles.button}>QnA</Link>
     </View>
   );
 }

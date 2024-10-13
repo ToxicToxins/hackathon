@@ -28,6 +28,7 @@ const InsertScreen: React.FC = () => {
     if (!result.canceled) {
       setSelectedImage(result.assets[0].uri);
       console.log(result);
+      console.log(result.assets[0].uri);
     }
   };
 

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, TouchableOpacity, ImageBackground } from 'react-native';
 import { readString } from 'react-native-csv';
 import OpenAI from 'openai';
 import { ChatCompletionMessageParam } from 'openai/resources/chat';
 import OPENAI_API_KEY from "./key";
+import LottieView from 'lottie-react-native';
 
 const openai = new OpenAI({
   apiKey: OPENAI_API_KEY,
@@ -123,42 +124,59 @@ export default function InsertScreen() {
 
   if (loading) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.text}>Loading recommendations...</Text>
-      </View>
+      <ImageBackground source={require('./and5.png')} style={styles.backgroundImage}>
+        <View style={styles.container}>
+          <Text style={styles.text}>Loading recommendations...</Text>
+          <LottieView
+            source={require('./anim2.json')} // Adjust the path if necessary
+            autoPlay={true}
+            loop={true}
+            style={styles.animation}
+          />
+        </View>
+      </ImageBackground>
     );
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Product Recommendations for {keyword} Skin</Text>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tabContainer}>
-        {productTypes.map((type) => (
-          <TouchableOpacity
-            key={type}
-            style={[styles.tab, activeTab === type && styles.activeTab]}
-            onPress={() => setActiveTab(type)}
-          >
-            <Text style={[styles.tabText, activeTab === type && styles.activeTabText]}>{type}</Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-      <ScrollView style={styles.recommendationsContainer}>
-        {recommendations[activeTab]?.map((recommendation, index) => (
-          <View key={index} style={styles.productCard}>
-            <Text style={styles.productName}>{recommendation[0]}</Text>
-            <Text style={styles.score}>Suitability Score: {recommendation[1].toFixed(1)}/10</Text>
-          </View>
-        ))}
-      </ScrollView>
-    </View>
+    <ImageBackground source={require('./and5.png')} style={styles.backgroundImage}>
+      <View style={styles.container}>
+        <Text style={styles.header}>Product Recommendations for {keyword} Skin</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tabContainer}>
+          {productTypes.map((type) => (
+            <TouchableOpacity
+              key={type}
+              style={[styles.tab, activeTab === type && styles.activeTab]}
+              onPress={() => setActiveTab(type)}
+            >
+              <Text style={[styles.tabText, activeTab === type && styles.activeTabText]}>{type}</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+        <ScrollView style={styles.recommendationsContainer}>
+          {recommendations[activeTab]?.map((recommendation, index) => (
+            <View key={index} style={styles.productCard}>
+              <Text style={styles.productName}>{recommendation[0]}</Text>
+              <Text style={styles.score}>Suitability Score: {recommendation[1].toFixed(1)}/10</Text>
+            </View>
+          ))}
+        </ScrollView>
+      </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover', // Adjusts the image size to cover the entire background
+    width: '100%',
+    height: '100%',
+    
+  },
   container: {
     flex: 1,
-    backgroundColor: '#25292e',
+    backgroundColor: 'rgba(0,0,0,0.5)', // Optional: add a semi-transparent overlay for better contrast
     padding: 20,
   },
   header: {
@@ -169,6 +187,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   text: {
+    fontSize: 20,
     color: '#fff',
     textAlign: 'center',
   },
@@ -212,5 +231,10 @@ const styles = StyleSheet.create({
     color: '#bdc3c7',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  animation: {
+    width: 300,
+    height: 300,
+    alignSelf: 'center',
   },
 });

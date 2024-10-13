@@ -8,7 +8,7 @@ import * as FileSystem from 'expo-file-system';
 import { Linking } from 'react-native';
 const API_URL = 'http://192.168.1.24:5000/';
 
-const PlaceholderImage = require('../../assets/images/background-image.jpg');
+const PlaceholderImage = require('../assets/images/background-image.jpg');
 
 interface DataItem {
   key: string;

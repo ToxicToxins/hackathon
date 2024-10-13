@@ -14,10 +14,7 @@ export default function Page() {
       <ScrollView>
         <Text style={styles.titleText}>Welcome!</Text>
         <Text style={styles.bodyText}>
-          This app takes a picture of your face, scans it for acne, and recommends some products to help treat it.
-        </Text>
-        <Text style={styles.bodyText2}>
-          Please fill out some questions to make it easier for the app to recommend you products.
+          This app uses a trained model to scan and analyze your face for different types of acne, providing a personalized approach to treatment. By taking a picture, the app assesses the severity and distribution of acne, generating a detailed skin report. It offers tailored product recommendations, such as cleansers and topical treatments, based on your specific skin type and acne condition.
         </Text>
         <Link href="/loading" style={styles.linkButton}>Loading</Link>
         <Link href="/output" style={styles.linkButton}>Output</Link>
@@ -51,12 +48,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     textAlign: 'center',
   },
-  bodyText2: {
-    color: '#fff',
-    fontSize: 18,
-    marginTop: 175,
-    textAlign: 'center',
-  },
   linkButton: {
     fontSize: 20,
     marginVertical: 10,
@@ -71,6 +62,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     marginBottom: 20,
+    marginTop: 200,
   },
   button: {
     backgroundColor: '#3b3b3b',

@@ -69,9 +69,9 @@ const InsertScreen: React.FC = () => {
     ],
     [
       { key:'1',value:"Yes, significantly worsens" }, 
-      {key:"2",value:"Slightly worsens"}, 
-      {key:"3",value:"No change noticed"}, 
-      {key:"4",value:"Improves during cycle"}
+      { key:"2",value:"Slightly worsens"}, 
+      { key:"3",value:"No change noticed"}, 
+      { key:"4",value:"Improves during cycle"}
     ]
   ];
 

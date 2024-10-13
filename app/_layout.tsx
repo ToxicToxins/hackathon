@@ -1,7 +1,20 @@
-import { Stack } from "expo-router";
+import { Stack } from 'expo-router';
 
 export default function RootLayout() {
   return (
+<<<<<<< HEAD
+    <Stack
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#25292e', // Match this color with your tab bar
+        },
+        headerTintColor: '#fff',
+      }}
+    >
+    </Stack>
+  );
+}
+=======
     
     <Stack screenOptions={{
       headerStyle: {
@@ -15,3 +28,4 @@ export default function RootLayout() {
   );
   
 }
+>>>>>>> master

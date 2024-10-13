@@ -6,7 +6,7 @@ import Button from '@/components/Buttons';
 import ImageViewer from "@/components/ImageViewer";
 import { SelectList } from 'react-native-dropdown-select-list';
 
-const PlaceholderImage = require('../../assets/images/background-image.jpg');
+const PlaceholderImage = require('../assets/images/background-image.jpg');
 
 interface DataItem {
   key: string;

@@ -84,4 +84,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
   },
+  headerStyle: {
+    backgroundColor: '#25292e',
+  }
 });

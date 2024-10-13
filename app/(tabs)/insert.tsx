@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, Alert, ScrollView } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { Image } from 'expo-image';
 import Button from '@/components/Buttons';
 import ImageViewer from "@/components/ImageViewer";
 import { SelectList } from 'react-native-dropdown-select-list';
+import * as FileSystem from 'expo-file-system';
+import { Linking } from 'react-native';
+const API_URL = 'http://192.168.1.24:5000/';
 
 const PlaceholderImage = require('../../assets/images/background-image.jpg');
 
@@ -16,7 +18,8 @@ interface DataItem {
 
 const InsertScreen: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
-  const [selectedAnswers, setSelectedAnswers] = useState<string[]>(["", "", "", "", "", ""]);
+  const [selectedAnswers, setSelectedAnswers] = useState<string[]>(["", ""]);
+  const [userId, setUserId] = useState<number | null>(null);
 
   const pickImageAsync = async (): Promise<void> => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -25,69 +28,67 @@ const InsertScreen: React.FC = () => {
       quality: 1,
     });
 
-    if (!result.canceled) {
+    if (!result.canceled && result.assets[0].uri) {
       setSelectedImage(result.assets[0].uri);
-      console.log(result);
     }
   };
 
   const questionData: DataItem[][] = [
     [
-      { key: '1', value: 'Hormonal changes' },
-      { key: '2', value: 'Diet and nutrition' },
-      { key: '3', value: 'Stress' },
-      { key: '4', value: 'Genetic predisposition' },
-      { key: '5', value: 'Poor skincare routine' },
+      { key: '1', value: 'Oily' },
+      { key: '2', value: 'Dry' },
+      { key: '3', value: 'Combination' },
+      { key: '4', value: 'Normal' },
     ],
     [
-      { key: '1', value: 'Topical retinoids' },
-      { key: '2', value: 'Benzoyl peroxide' },
-      { key: '3', value: 'Salicylic acid' },
-      { key: '4', value: 'Oral antibiotics' },
-      { key: '5', value: 'Hormonal therapy' },
+      { key: '1', value: 'Not sensitive' },
+      { key: '2', value: 'Sensitive' },
+      { key: '3', value: 'Very sensitive' },
     ],
-    [
-      { key: '1', value: 'Once a week' },
-      { key: '2', value: 'Twice a week' },
-      { key: '3', value: 'Every other day' },
-      { key: '4', value: 'Daily' },
-      { key: '5', value: 'Never' },
-    ],
-    [
-      { key: '1', value: 'Alcohol-based products' },
-      { key: '2', value: 'Fragrances' },
-      { key: '3', value: 'Heavy oils (e.g., coconut oil)' },
-      { key: '4', value: 'Parabens' },
-      { key: '5', value: 'Sulfates' },
-    ],
-    [
-      { key: '1', value: 'Oil-free moisturizer' },
-      { key: '2', value: 'Gel-based moisturizer' },
-      { key: '3', value: 'Non-comedogenic moisturizer' },
-      { key: '4', value: 'Moisturizers with hyaluronic acid' },
-      { key: '5', value: 'Moisturizers with ceramides' },
-    ],
-    [
-      { key:'1',value:"Yes, significantly worsens" }, 
-      { key:"2",value:"Slightly worsens"}, 
-      { key:"3",value:"No change noticed"}, 
-      { key:"4",value:"Improves during cycle"}
-    ]
   ];
 
   const questions = [
-    "What Causes Acne?",
-    "What Treatments Are Available for My Skin Type?",
-    "How Often Should I Exfoliate?",
-    "Are There Any Ingredients I Should Avoid?",
-    "What Is the Best Moisturizer for Acne-Prone Skin?",
-    "Does My Acne Worsen Around My Menstrual Cycle?"
+    "What is your skin type?",
+    "How sensitive is your skin?"
   ];
 
-  const handleSelection = (index:number, value:string): void => {
+  const handleSelection = (index: number, value: string): void => {
     const newSelectedAnswers = [...selectedAnswers];
     newSelectedAnswers[index] = value;
     setSelectedAnswers(newSelectedAnswers);
+  };
+
+  const submitData = async () => {
+    if (!selectedImage || selectedAnswers.some(answer => answer === "")) {
+      Alert.alert("Error", "Please fill in all fields and select an image.");
+      return;
+    }
+
+    try {
+      const base64Image = await FileSystem.readAsStringAsync(selectedImage, { encoding: FileSystem.EncodingType.Base64 });
+
+      const response = await fetch(`${API_URL}create_user`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          image: base64Image,
+          keywords: selectedAnswers.filter(answer => answer !== ""),
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setUserId(data.id);
+      // change to loading screen
+    } catch (error) {
+      console.error('Error submitting data:', error);
+      Alert.alert("Error", "Failed to submit data. Please try again.");
+    }
   };
 
   return (
@@ -97,15 +98,14 @@ const InsertScreen: React.FC = () => {
           <ImageViewer imgSource={PlaceholderImage} selectedImage={selectedImage} />
         </View>
         <View style={styles.footerContainer}>
-          <Button theme="primary" label="Choose a photo" onPress={pickImageAsync}/>
+          <Button theme="primary" label="Choose a photo" onPress={pickImageAsync} />
         </View>
-        {/* Render each question with its dropdown */}
         {questions.map((question, index) => (
           <View key={index} style={styles.questionContainer}>
             <Text style={styles.text}>{question}</Text>
-            <SelectList 
+            <SelectList
               setSelected={(value: string) => handleSelection(index, value)}
-              data={questionData[index]} 
+              data={questionData[index]}
               save="value"
               placeholder="Select an option"
               boxStyles={styles.dropdownBox}
@@ -115,7 +115,7 @@ const InsertScreen: React.FC = () => {
             />
           </View>
         ))}
-        <Button label="Submit answers and image" />
+        <Button label="Submit answers and image" onPress={submitData} />
       </View>
     </ScrollView>
   );
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   questionContainer: {
-    width: '100%', 
+    width: '100%',
     marginBottom: 20,
     backgroundColor: "#2c2c2e",
     borderRadius: 10,
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   dropdownBox: {
-    width: '90%', 
+    width: '90%',
     backgroundColor: "#3a3a3c",
     borderRadius: 8,
   },

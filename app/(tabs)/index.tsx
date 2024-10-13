@@ -1,18 +1,31 @@
-import { Text, View, StyleSheet, ScrollView } from 'react-native';
-import { Link } from 'expo-router';
-import Button from '@/components/Buttons';
+import { Text, View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { Link, useRouter } from 'expo-router';
 
 export default function Page() {
+  const router = useRouter();
+
+  const handleInsertPress = () => {
+    console.log('Insert button pressed');
+    router.push('/insert');
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView>
-      <Text style={styles.titleText}>Welcome! </Text>
-      <Text style={styles.bodyText}>This app takes a picture of your face,
-      scans it for acne, and recommends some products to help treat it.</Text>
-      <Text style={styles.bodyText2}>Please fill out some questions to make it easier for the app to recommend you products.</Text>
-      <Link href="/loading" style={styles.button}>Loading</Link>
-      <Link href="/output" style={styles.button}>Output</Link>
-      <Link href="/insert" style={styles.button}>Insert</Link>
+        <Text style={styles.titleText}>Welcome!</Text>
+        <Text style={styles.bodyText}>
+          This app takes a picture of your face, scans it for acne, and recommends some products to help treat it.
+        </Text>
+        <Text style={styles.bodyText2}>
+          Please fill out some questions to make it easier for the app to recommend you products.
+        </Text>
+        <Link href="/loading" style={styles.linkButton}>Loading</Link>
+        <Link href="/output" style={styles.linkButton}>Output</Link>
+        <View style={styles.footerContainer}>
+          <TouchableOpacity onPress={handleInsertPress} style={styles.button}>
+            <Text style={styles.buttonText}>Insert</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </View>
   );
@@ -24,13 +37,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#25292e',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingHorizontal: 16
+    paddingHorizontal: 16,
   },
   titleText: {
     color: '#fff',
     fontSize: 30,
     marginTop: 20,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   bodyText: {
     color: '#fff',
@@ -44,12 +57,31 @@ const styles = StyleSheet.create({
     marginTop: 175,
     textAlign: 'center',
   },
-  button: {
+  linkButton: {
     fontSize: 20,
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    marginVertical: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: '#3b3b3b',
+    borderRadius: 5,
     color: '#ffffff',
-    textAlign: 'center'
+    textAlign: 'center',
+  },
+  footerContainer: {
+    width: '100%',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  button: {
+    backgroundColor: '#3b3b3b',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#ffffff',
+    fontSize: 20,
+    textAlign: 'center',
   },
 });

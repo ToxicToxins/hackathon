@@ -172,7 +172,6 @@ const styles = StyleSheet.create({
     resizeMode: 'cover', // Adjusts the image size to cover the entire background
     width: '100%',
     height: '100%',
-    
   },
   container: {
     flex: 1,

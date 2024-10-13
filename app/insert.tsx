@@ -6,6 +6,7 @@ import ImageViewer from "@/components/ImageViewer";
 import { SelectList } from 'react-native-dropdown-select-list';
 import * as FileSystem from 'expo-file-system';
 import { Linking } from 'react-native';
+import { Link, useRouter } from 'expo-router';
 const API_URL = 'http://192.168.1.24:5000/';
 
 const PlaceholderImage = require('../assets/images/background-image.jpg');
@@ -20,6 +21,7 @@ const InsertScreen: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>(["", ""]);
   const [userId, setUserId] = useState<number | null>(null);
+  const router = useRouter();
 
   const pickImageAsync = async (): Promise<void> => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -84,7 +86,7 @@ const InsertScreen: React.FC = () => {
 
       const data = await response.json();
       setUserId(data.id);
-      // change to loading screen
+      router.push('/loading');
     } catch (error) {
       console.error('Error submitting data:', error);
       Alert.alert("Error", "Failed to submit data. Please try again.");

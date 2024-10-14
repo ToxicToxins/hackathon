@@ -1,50 +1,28 @@
-# Welcome to your Expo app 👋
+# Inspiration
+Wanting to learn about using Image Recognition Tools to predict human features.
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+# What it does
+Detects acne on your face with an image recognition model and then gives recommended products to use to tackle them.
 
-## Get started
+# How we built it
+Built with yolov11 for image recognition, openai for natural language processing, and react-native to display our features.
 
-1. Install dependencies
+# Challenges we ran into
+AWS cluster integration and connecting to Databases through the service
 
-   ```bash
-   npm install
-   ```
+# Accomplishments that we're proud of
+Utilizing AWS to host database and EC2 instances
 
-2. Start the app
+# What we learned
+React-native, AWS, yolov11, and how to utilize these tools. Also learned how difficult the time constraints can be with hackathons. Learning how to manage time and split resources evenly.
 
-   ```bash
-    npx expo start
-   ```
+# What's next for Acne Detection ML
+Better trained model for more accurate predictions. Potential business operations with Amazon API integration. Etc.
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+# Built With
+amazon-web-services
+openai
+opencv
+python
+react-native
+yolov11
